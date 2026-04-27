@@ -33,7 +33,7 @@
 
 <div class="container text-center mt-5">
 
-    <h1 class="fw-bold">Plateforme d’Évaluation des Enseignants</h1>
+    <h1 class="fw-bold">Plateforme d'Évaluation des Enseignants</h1>
     <p class="text-muted mb-5">Choisissez votre espace</p>
 
     <div class="row justify-content-center g-4">
@@ -51,7 +51,7 @@
 
         <!-- ENSEIGNANT -->
         <div class="col-md-3">
-            <a href="/teacher/login" class="text-decoration-none text-dark">
+            <a href="/login" class="text-decoration-none text-dark">
                 <div class="card card-role p-4 shadow-sm">
                     <div class="icon">👨‍🏫</div>
                     <h4 class="mt-3">Enseignant</h4>
@@ -62,7 +62,7 @@
 
         <!-- ADMIN -->
         <div class="col-md-3">
-            <a href="/admin/login" class="text-decoration-none text-dark">
+            <a href="/login" class="text-decoration-none text-dark">
                 <div class="card card-role p-4 shadow-sm">
                     <div class="icon">🛠️</div>
                     <h4 class="mt-3">Administrateur</h4>

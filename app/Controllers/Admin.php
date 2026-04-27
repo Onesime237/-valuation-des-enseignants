@@ -2,12 +2,16 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
-
-class Admin extends Controller
+class Admin extends BaseController
 {
-    public function login()
+    public function index(): string
     {
-        return view('admin/login');
+        
+        $data = [
+            'user_name' => session()->get('user_name'),
+            'user_email' => session()->get('user_email'),
+        ];
+
+        return view('admin/dashboard', $data);
     }
 }

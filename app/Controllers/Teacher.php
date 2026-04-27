@@ -2,12 +2,15 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
-
-class Teacher extends Controller
+class Teacher extends BaseController
 {
-    public function login()
+    public function dashboard(): string
     {
-        return view('teacher/login');
+        $data = [
+            'user_name' => session()->get('user_name'),
+            'user_email' => session()->get('user_email'),
+        ];
+
+        return view('teacher/dashboard', $data);
     }
 }

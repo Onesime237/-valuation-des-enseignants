@@ -1,35 +1,25 @@
 <?php
 
-use App\Controllers\News;
 use CodeIgniter\Router\RouteCollection;
-use App\Controllers\Pages;
-/**
- * @var RouteCollection $routes
- */
-$routes->get('news', [News::class, 'index']);  
-$routes->get('news/new', [News::class, 'new']);
-$routes->post('news', [News::class, 'create']);
-$routes->get('news/(:segment)', [News::class, 'show']);
 
-// 👉 TA PAGE D'ACCUEIL
-$routes->get('/', 'Home::index');   // page d'accueil
-$routes->get('/login', 'Auth::index'); // connexion
+/** @var RouteCollection $routes */
+$routes->setAutoRoute(false);
 
+// ── Public ────────────────────────────────────────────────────────────────────
+$routes->get('/', 'Home::index');
 
-$routes->get('/login', 'Auth::login');
-// Teacher
-$routes->get('/teacher/login', 'Teacher::login');
-// Admin
-$routes->get('/admin/login', 'Admin::login');
+// ── Auth ──────────────────────────────────────────────────────────────────────
+$routes->get('/login',  'Auth::index');
+$routes->post('/login', 'Auth::login');
+$routes->get('/logout', 'Auth::logout');
 
-// autres routes
-$routes->get('pages', [Pages::class, 'index']);
-$routes->get('/student/profile', 'Student::profile');   // afficher page
-$routes->post('/student/profile', 'Student::profile'); // traiter données
-$routes->post('/student/teachers', 'Student::teachers');
-$routes->get('/student/teachers', 'Student::teachers');
-$routes->get('/student/evaluate/(:num)', 'Student::evaluate/$1');
-// ⚠️ TOUJOURS EN DERNIER
-$routes->get('(:segment)', [Pages::class, 'view']);
+// ── Admin ─────────────────────────────────────────────────────────────────────
+$routes->get('/admin/dashboard', 'Admin::index', ['filter' => 'auth:admin']);
+// ── Teacher ───────────────────────────────────────────────────────────────────
+$routes->get('/teacher/dashboard', 'Teacher::dashboard', ['filter' => 'auth:teacher']);
 
+// ── Student ───────────────────────────────────────────────────────────────────
+$routes->get('/student/dashboard', 'Student::dashboard', ['filter' => 'auth:student']);
 
+// ── Catch-all — MUST stay last ────────────────────────────────────────────────
+$routes->get('(:segment)', 'Pages::view');

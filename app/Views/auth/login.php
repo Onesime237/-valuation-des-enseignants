@@ -1,38 +1,146 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Teacher Evaluation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .login-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .login-card h1 {
+            color: #f1f5f9;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .login-card p.subtitle {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #f1f5f9;
+            border-radius: 8px;
+            padding: 0.65rem 1rem;
+        }
+
+        .form-control:focus {
+            background: #0f172a;
+            border-color: #6366f1;
+            color: #f1f5f9;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .form-control::placeholder {
+            color: #475569;
+        }
+
+        .btn-login {
+            background: #6366f1;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.7rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-login:hover {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .alert {
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
+<body>
 
-<body class="bg-light">
+<div class="login-card">
 
-<div class="container d-flex justify-content-center align-items-center" style="height:100vh;">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to access your dashboard</p>
 
-    <div class="card shadow p-4" style="width:350px; border-radius:15px;">
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger">
+            <?= esc(session()->getFlashdata('error')) ?>
+        </div>
+    <?php endif; ?>
 
-        <h3 class="text-center mb-4">Connexion</h3>
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= esc(session()->getFlashdata('success')) ?>
+        </div>
+    <?php endif; ?>
 
-            <form action="/student/teachers" method="POST">
-            <?= csrf_field() ?>
-            <div class="mb-3">
-                <label>Matricule / Email</label>
-                <input type="text" class="form-control" placeholder="Entrez votre identifiant">
-            </div>
+    <?php if (session()->getFlashdata('errors')): ?>
+        <div class="alert alert-danger">
+            <?php foreach (session()->getFlashdata('errors') as $err): ?>
+                <div><?= esc($err) ?></div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
-            <div class="mb-3">
-                <label>Mot de passe</label>
-                <input type="password" class="form-control" placeholder="Mot de passe">
-            </div>
+    <form action="/login" method="POST">
+        <?= csrf_field() ?>
 
-            <button class="btn btn-primary w-100">Se connecter</button>
+        <div class="mb-3">
+            <label class="form-label">Email or Matricule</label>
+            <input
+                type="text"
+                name="identifier"
+                class="form-control"
+                value="<?= esc(old('identifier')) ?>"
+                placeholder="your@email.com or ETU001"
+                autofocus
+                required
+            >
+        </div>
 
-        </form>
+        <div class="mb-4">
+            <label class="form-label">Password</label>
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="••••••••"
+                required
+            >
+        </div>
 
-    </div>
+        <button type="submit" class="btn-login">Sign in</button>
+
+    </form>
 
 </div>
 
