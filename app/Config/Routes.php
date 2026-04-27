@@ -46,6 +46,23 @@ $routes->post('/admin/courses/edit/(:num)',            'Admin::updateCourse/$1',
 $routes->get('/admin/courses/toggle/(:num)',           'Admin::toggleCourse/$1',       ['filter' => 'auth:admin']);
 $routes->get('/admin/courses/delete/(:num)',           'Admin::deleteCourse/$1',       ['filter' => 'auth:admin']);
 
+// Categories
+$routes->get('/admin/categories',                      'Admin::categories',            ['filter' => 'auth:admin']);
+$routes->get('/admin/categories/create',               'Admin::createCategory',        ['filter' => 'auth:admin']);
+$routes->post('/admin/categories/create',              'Admin::storeCategory',         ['filter' => 'auth:admin']);
+$routes->get('/admin/categories/edit/(:num)',          'Admin::editCategory/$1',       ['filter' => 'auth:admin']);
+$routes->post('/admin/categories/edit/(:num)',         'Admin::updateCategory/$1',     ['filter' => 'auth:admin']);
+$routes->get('/admin/categories/delete/(:num)',        'Admin::deleteCategory/$1',     ['filter' => 'auth:admin']);
+
+// Questions
+$routes->get('/admin/questions',                       'Admin::questions',             ['filter' => 'auth:admin']);
+$routes->get('/admin/questions/create',                'Admin::createQuestion',        ['filter' => 'auth:admin']);
+$routes->post('/admin/questions/create',               'Admin::storeQuestion',         ['filter' => 'auth:admin']);
+$routes->get('/admin/questions/edit/(:num)',           'Admin::editQuestion/$1',       ['filter' => 'auth:admin']);
+$routes->post('/admin/questions/edit/(:num)',          'Admin::updateQuestion/$1',     ['filter' => 'auth:admin']);
+$routes->get('/admin/questions/toggle/(:num)',         'Admin::toggleQuestion/$1',     ['filter' => 'auth:admin']);
+$routes->get('/admin/questions/delete/(:num)',         'Admin::deleteQuestion/$1',     ['filter' => 'auth:admin']);
+
 // ── Teacher ───────────────────────────────────────────────────────────────────
 $routes->get('/teacher/dashboard', 'Teacher::dashboard', ['filter' => 'auth:teacher']);
 

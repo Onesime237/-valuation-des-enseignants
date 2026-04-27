@@ -81,10 +81,13 @@
         <a href="/admin/dashboard" class="nav-link">Dashboard</a>
         <a href="/admin/teachers" class="nav-link active">Teachers</a>
         <a href="/admin/students" class="nav-link">Students</a>
-        <a href="/admin/courses">Courses</a>
+        <a href="/admin/courses" class="nav-link">Courses</a>
+        <a href="/admin/categories" class="nav-link">Categories</a>
+        <a href="/admin/questions" class="nav-link">Questions</a>
         <a href="/logout" class="btn-logout">Logout</a>
     </div>
 </div>
+
 
 <div class="main">
 
