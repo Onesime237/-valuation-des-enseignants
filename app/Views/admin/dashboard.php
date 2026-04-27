@@ -16,15 +16,7 @@
             align-items: center;
         }
         .topbar h1 { font-size: 1.1rem; font-weight: 700; margin: 0; color: #f1f5f9; }
-        .topbar span { color: #94a3b8; font-size: 0.875rem; }
-        .badge-role {
-            background: #6366f1;
-            color: #fff;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-weight: 600;
-        }
+        .badge-role { background: #6366f1; color: #fff; font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 600; }
         .main { padding: 2rem; }
         .welcome-card {
             background: #1e293b;
@@ -35,17 +27,27 @@
         }
         .welcome-card h2 { font-size: 1.3rem; font-weight: 700; color: #f1f5f9; }
         .welcome-card p { color: #94a3b8; margin: 0; font-size: 0.9rem; }
-        .btn-logout {
-            background: transparent;
-            border: 1px solid #ef4444;
-            color: #ef4444;
-            border-radius: 8px;
-            padding: 0.4rem 1rem;
-            font-size: 0.875rem;
+        .stat-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.5rem;
             text-decoration: none;
+            display: block;
             transition: all 0.2s;
         }
+        .stat-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-3px);
+        }
+        .stat-card .number { font-size: 2rem; font-weight: 700; color: #6366f1; }
+        .stat-card .label { color: #94a3b8; font-size: 0.875rem; margin-top: 0.25rem; }
+        .stat-card .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .btn-logout { background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.875rem; text-decoration: none; }
         .btn-logout:hover { background: #ef4444; color: #fff; }
+        .nav-link { color: #94a3b8; font-size: 0.875rem; text-decoration: none; }
+        .nav-link:hover { color: #f1f5f9; }
+        .nav-link.active { color: #6366f1; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -55,17 +57,45 @@
         <h1>Teacher Evaluation</h1>
         <span class="badge-role">Admin</span>
     </div>
-    <div class="d-flex align-items-center gap-3">
-        <span><?= esc($user_email) ?></span>
+    <div class="d-flex align-items-center gap-4">
+        <a href="/admin/dashboard" class="nav-link active">Dashboard</a>
+        <a href="/admin/teachers" class="nav-link">Teachers</a>
+        <a href="/admin/students" class="nav-link">Students</a>
         <a href="/logout" class="btn-logout">Logout</a>
     </div>
 </div>
 
 <div class="main">
+
     <div class="welcome-card">
         <h2>Welcome, <?= esc($user_name) ?> 👋</h2>
-        <p>You are logged in as Administrator. More features coming as we build each module.</p>
+        <p>You are logged in as Administrator. Manage teachers, students and evaluations from here.</p>
     </div>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="/admin/teachers" class="stat-card">
+                <div class="icon">👨‍🏫</div>
+                <div class="number"><?= $total_teachers ?></div>
+                <div class="label">Teachers</div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/students" class="stat-card">
+                <div class="icon">🎓</div>
+                <div class="number"><?= $total_students ?></div>
+                <div class="label">Students</div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="#" class="stat-card">
+                <div class="icon">📋</div>
+                <div class="number">0</div>
+                <div class="label">Evaluations</div>
+            </a>
+        </div>
+    </div>
+
 </div>
 
 </body>
