@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluate Teachers — Student</title>
+    <title>My Evaluations — Student</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background: #0f172a; color: #f1f5f9; }
@@ -20,9 +20,7 @@
         .nav-link { color: #94a3b8; font-size: 0.875rem; text-decoration: none; }
         .nav-link:hover { color: #f1f5f9; }
         .nav-link.active { color: #6366f1; font-weight: 600; }
-        .btn-evaluate { background: #6366f1; color: #fff; border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.75rem; text-decoration: none; }
-        .btn-evaluate:hover { background: #4f46e5; color: #fff; }
-        .btn-evaluated { background: #10b981; color: #fff; border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.75rem; cursor: not-allowed; }
+        .badge-submitted { background: #10b981; color: #fff; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; }
     </style>
 </head>
 <body>
@@ -34,24 +32,15 @@
     </div>
     <div class="d-flex align-items-center gap-4">
         <a href="/student/dashboard" class="nav-link">Dashboard</a>
-        <a href="/student/evaluate" class="nav-link active">Evaluate</a>
-        <a href="/student/my-evaluations" class="nav-link">My Evaluations</a>
+        <a href="/student/evaluate" class="nav-link">Evaluate</a>
+        <a href="/student/my-evaluations" class="nav-link active">My Evaluations</a>
         <a href="/logout" class="btn-logout">Logout</a>
     </div>
 </div>
 
 <div class="main">
 
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div>
-    <?php endif; ?>
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div>
-    <?php endif; ?>
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 style="font-size:1.3rem;font-weight:700">Evaluate Your Teachers</h2>
-    </div>
+    <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1.5rem">My Submitted Evaluations</h2>
 
     <div class="card-dark">
         <table class="table table-dark-custom mb-0">
@@ -60,31 +49,19 @@
                     <th>Teacher</th>
                     <th>Course</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (empty($teacherCourses)): ?>
-                    <tr><td colspan="4" class="text-center" style="color:#94a3b8;padding:2rem">No teachers/courses available for evaluation.</td></tr>
+                <?php if (empty($evaluations)): ?>
+                    <tr><td colspan="4" class="text-center" style="color:#94a3b8;padding:2rem">No evaluations submitted yet.</td></tr>
                 <?php else: ?>
-                    <?php foreach ($teacherCourses as $tc): ?>
+                    <?php foreach ($evaluations as $eval): ?>
                     <tr>
-                        <td><?= esc($tc['teacher_name']) ?></td>
-                        <td><?= esc($tc['course_name']) ?></td>
-                        <td>
-                            <?php if ($tc['already_evaluated']): ?>
-                                <span style="color:#10b981;font-size:0.875rem">✓ Evaluated</span>
-                            <?php else: ?>
-                                <span style="color:#f59e0b;font-size:0.875rem">○ Pending</span>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?php if ($tc['already_evaluated']): ?>
-                                <span class="btn-evaluated">Already Done</span>
-                            <?php else: ?>
-                                <a href="/student/evaluate/<?= $tc['teacher_id'] ?>/<?= $tc['course_id'] ?>" class="btn-evaluate">Evaluate</a>
-                            <?php endif; ?>
-                        </td>
+                        <td><?= esc($eval['teacher_name']) ?></td>
+                        <td><?= esc($eval['course_name']) ?></td>
+                        <td><span class="badge-submitted">Submitted</span></td>
+                        <td style="color:#94a3b8;font-size:0.875rem"><?= date('M d, Y', strtotime($eval['created_at'])) ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

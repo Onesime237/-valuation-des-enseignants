@@ -9,7 +9,7 @@ $routes->setAutoRoute(false);
 // ── Public ────────────────────────────────────────────────────────────────────
 $routes->get('/', 'Home::index');
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
+// ── Auth ─────────────────────────────────────────────────────────────────────
 $routes->get('/login',  'Auth::index');
 $routes->post('/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
@@ -67,7 +67,11 @@ $routes->get('/admin/questions/delete/(:num)',         'Admin::deleteQuestion/$1
 $routes->get('/teacher/dashboard', 'Teacher::dashboard', ['filter' => 'auth:teacher']);
 
 // ── Student ───────────────────────────────────────────────────────────────────
-$routes->get('/student/dashboard', 'Student::dashboard', ['filter' => 'auth:student']);
+$routes->get('/student/dashboard',                     'Student::dashboard',           ['filter' => 'auth:student']);
+$routes->get('/student/evaluate',                      'Student::evaluate',            ['filter' => 'auth:student']);
+$routes->get('/student/evaluate/(:num)/(:num)',        'Student::evaluateForm/$1/$2',  ['filter' => 'auth:student']);
+$routes->post('/student/evaluate/(:num)/(:num)',       'Student::submitEvaluation/$1/$2', ['filter' => 'auth:student']);
+$routes->get('/student/my-evaluations',                'Student::myEvaluations',       ['filter' => 'auth:student']);
 
 // ── Catch-all — MUST stay last ────────────────────────────────────────────────
 $routes->get('(:segment)', 'Pages::view');
