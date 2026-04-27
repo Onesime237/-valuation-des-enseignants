@@ -3,24 +3,34 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\CourseModel;
+use App\Models\TeacherCourseModel;
+use App\Models\CategoryModel;
+use App\Models\QuestionModel;
+use App\Models\EvaluationPdfModel;
 
 class Admin extends BaseController
 {
     // ── Dashboard ─────────────────────────────────────────────────────────────
 
-public function index(): string
-{
-    $model = new UserModel();
+        public function index(): string
+    {
+        $userModel = new UserModel();
+        $evaluationModel = new \App\Models\EvaluationModel();
+        $pdfModel = new \App\Models\EvaluationPdfModel();
 
-    $data = [
-        'user_name'      => session()->get('user_name'),
-        'user_email'     => session()->get('user_email'),
-        'total_teachers' => $model->where('role', 'teacher')->countAllResults(),
-        'total_students' => $model->where('role', 'student')->countAllResults(),
-    ];
+        $data = [
+            'user_name'         => session()->get('user_name'),
+            'user_email'        => session()->get('user_email'),
+            'total_teachers'    => $userModel->where('role', 'teacher')->countAllResults(),
+            'total_students'    => $userModel->where('role', 'student')->countAllResults(),
+            'total_evaluations' => $evaluationModel->countAllResults(),
+            'total_pdfs'        => $pdfModel->countAllResults(),
+        ];
 
-    return view('admin/dashboard', $data);
-}
+        return view('admin/dashboard', $data);
+    }
+
 
     // ── Teachers ──────────────────────────────────────────────────────────────
 
@@ -105,7 +115,6 @@ public function index(): string
             'email' => $this->request->getPost('email'),
         ];
 
-        // Only update password if a new one was provided
         $newPassword = $this->request->getPost('password');
         if (! empty($newPassword)) {
             $updateData['password'] = $newPassword;
@@ -286,11 +295,12 @@ public function index(): string
         return redirect()->to('/admin/students')
                          ->with('success', 'Student deleted successfully.');
     }
-    // ── Courses ───────────────────────────────────────────────────────────────
+
+    // ── Courses ──────────────────────────────────────────────────────────────
 
     public function courses(): string
     {
-        $courseModel = new \App\Models\CourseModel();
+        $courseModel = new CourseModel();
         $data = [
             'courses' => $courseModel->findAll(),
         ];
@@ -316,7 +326,7 @@ public function index(): string
                              ->with('errors', $this->validator->getErrors());
         }
 
-        $courseModel = new \App\Models\CourseModel();
+        $courseModel = new CourseModel();
         $courseModel->insert([
             'name'        => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
@@ -329,7 +339,7 @@ public function index(): string
 
     public function editCourse(int $id): string
     {
-        $courseModel = new \App\Models\CourseModel();
+        $courseModel = new CourseModel();
         $course = $courseModel->find($id);
 
         if (! $course) {
@@ -342,7 +352,7 @@ public function index(): string
 
     public function updateCourse(int $id)
     {
-        $courseModel = new \App\Models\CourseModel();
+        $courseModel = new CourseModel();
         $course = $courseModel->find($id);
 
         if (! $course) {
@@ -372,7 +382,7 @@ public function index(): string
 
     public function toggleCourse(int $id)
     {
-        $courseModel = new \App\Models\CourseModel();
+        $courseModel = new CourseModel();
         $course = $courseModel->find($id);
 
         if (! $course) {
@@ -389,7 +399,7 @@ public function index(): string
 
     public function deleteCourse(int $id)
     {
-        $courseModel = new \App\Models\CourseModel();
+        $courseModel = new CourseModel();
         $course = $courseModel->find($id);
 
         if (! $course) {
@@ -407,9 +417,9 @@ public function index(): string
 
     public function assignCourses(int $teacherId): string
     {
-        $userModel         = new \App\Models\UserModel();
-        $courseModel       = new \App\Models\CourseModel();
-        $teacherCourseModel = new \App\Models\TeacherCourseModel();
+        $userModel         = new UserModel();
+        $courseModel       = new CourseModel();
+        $teacherCourseModel = new TeacherCourseModel();
 
         $teacher        = $userModel->find($teacherId);
         $allCourses     = $courseModel->getActiveCourses();
@@ -430,8 +440,8 @@ public function index(): string
 
     public function saveAssignments(int $teacherId)
     {
-        $userModel          = new \App\Models\UserModel();
-        $teacherCourseModel = new \App\Models\TeacherCourseModel();
+        $userModel          = new UserModel();
+        $teacherCourseModel = new TeacherCourseModel();
 
         $teacher = $userModel->find($teacherId);
 
@@ -456,13 +466,11 @@ public function index(): string
                          ->with('success', 'Course assignments updated successfully.');
     }
 
-
-
     // ── Categories ────────────────────────────────────────────────────────────
 
     public function categories(): string
     {
-        $categoryModel = new \App\Models\CategoryModel();
+        $categoryModel = new CategoryModel();
         $data = [
             'categories' => $categoryModel->findAll(),
         ];
@@ -488,7 +496,7 @@ public function index(): string
                              ->with('errors', $this->validator->getErrors());
         }
 
-        $categoryModel = new \App\Models\CategoryModel();
+        $categoryModel = new CategoryModel();
         $categoryModel->insert([
             'name'        => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
@@ -500,7 +508,7 @@ public function index(): string
 
     public function editCategory(int $id): string
     {
-        $categoryModel = new \App\Models\CategoryModel();
+        $categoryModel = new CategoryModel();
         $category = $categoryModel->find($id);
 
         if (! $category) {
@@ -513,7 +521,7 @@ public function index(): string
 
     public function updateCategory(int $id)
     {
-        $categoryModel = new \App\Models\CategoryModel();
+        $categoryModel = new CategoryModel();
         $category = $categoryModel->find($id);
 
         if (! $category) {
@@ -543,7 +551,7 @@ public function index(): string
 
     public function deleteCategory(int $id)
     {
-        $categoryModel = new \App\Models\CategoryModel();
+        $categoryModel = new CategoryModel();
         $category = $categoryModel->find($id);
 
         if (! $category) {
@@ -561,7 +569,7 @@ public function index(): string
 
     public function questions(): string
     {
-        $questionModel = new \App\Models\QuestionModel();
+        $questionModel = new QuestionModel();
         $data = [
             'questions' => $questionModel->getAllWithCategory(),
         ];
@@ -571,7 +579,7 @@ public function index(): string
 
     public function createQuestion(): string
     {
-        $categoryModel = new \App\Models\CategoryModel();
+        $categoryModel = new CategoryModel();
         $data = [
             'categories' => $categoryModel->getDropdown(),
         ];
@@ -593,7 +601,7 @@ public function index(): string
                              ->with('errors', $this->validator->getErrors());
         }
 
-        $questionModel = new \App\Models\QuestionModel();
+        $questionModel = new QuestionModel();
         $questionModel->insert([
             'text'        => $this->request->getPost('text'),
             'type'        => $this->request->getPost('type'),
@@ -607,8 +615,8 @@ public function index(): string
 
     public function editQuestion(int $id): string
     {
-        $questionModel = new \App\Models\QuestionModel();
-        $categoryModel = new \App\Models\CategoryModel();
+        $questionModel = new QuestionModel();
+        $categoryModel = new CategoryModel();
 
         $question = $questionModel->find($id);
 
@@ -625,7 +633,7 @@ public function index(): string
 
     public function updateQuestion(int $id)
     {
-        $questionModel = new \App\Models\QuestionModel();
+        $questionModel = new QuestionModel();
         $question = $questionModel->find($id);
 
         if (! $question) {
@@ -657,7 +665,7 @@ public function index(): string
 
     public function toggleQuestion(int $id)
     {
-        $questionModel = new \App\Models\QuestionModel();
+        $questionModel = new QuestionModel();
         $question = $questionModel->find($id);
 
         if (! $question) {
@@ -674,7 +682,7 @@ public function index(): string
 
     public function deleteQuestion(int $id)
     {
-        $questionModel = new \App\Models\QuestionModel();
+        $questionModel = new QuestionModel();
         $question = $questionModel->find($id);
 
         if (! $question) {
@@ -686,5 +694,39 @@ public function index(): string
 
         return redirect()->to('/admin/questions')
                          ->with('success', 'Question deleted successfully.');
+    }
+
+    // ── Evaluation PDFs ───────────────────────────────────────────────────────
+
+    public function evaluationPdfs(): string
+    {
+        $pdfModel = new EvaluationPdfModel();
+        $pdfs = $pdfModel->getAllWithDetails();
+
+        $data = [
+            'pdfs' => $pdfs,
+        ];
+
+        return view('admin/evaluation_pdfs/index', $data);
+    }
+
+    public function downloadPdf(int $id)
+    {
+        $pdfModel = new EvaluationPdfModel();
+        $pdf = $pdfModel->find($id);
+
+        if (!$pdf) {
+            return redirect()->to('/admin/evaluation-pdfs')
+                             ->with('error', 'PDF not found.');
+        }
+
+        $filePath = WRITEPATH . 'pdfs/' . $pdf['file_path'];
+
+        if (!file_exists($filePath)) {
+            return redirect()->to('/admin/evaluation-pdfs')
+                             ->with('error', 'PDF file not found on server.');
+        }
+
+        return $this->response->download($filePath, null);
     }
 }

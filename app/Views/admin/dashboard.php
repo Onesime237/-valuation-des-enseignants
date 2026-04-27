@@ -64,6 +64,7 @@
         <a href="/admin/courses" class="nav-link">Courses</a>
         <a href="/admin/categories" class="nav-link">Categories</a>
         <a href="/admin/questions" class="nav-link">Questions</a>
+        <a href="/admin/evaluation-pdfs" class="nav-link">PDFs</a>
         <a href="/logout" class="btn-logout">Logout</a>
     </div>
 </div>
@@ -73,29 +74,36 @@
 
     <div class="welcome-card">
         <h2>Welcome, <?= esc($user_name) ?> 👋</h2>
-        <p>You are logged in as Administrator. Manage teachers, students and evaluations from here.</p>
+        <p>You are logged in as Administrator. Manage teachers, students, courses and evaluations from here.</p>
     </div>
 
     <div class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <a href="/admin/teachers" class="stat-card">
                 <div class="icon">👨‍🏫</div>
                 <div class="number"><?= $total_teachers ?></div>
                 <div class="label">Teachers</div>
             </a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <a href="/admin/students" class="stat-card">
                 <div class="icon">🎓</div>
                 <div class="number"><?= $total_students ?></div>
                 <div class="label">Students</div>
             </a>
         </div>
-        <div class="col-md-4">
-            <a href="#" class="stat-card">
-                <div class="icon">📋</div>
-                <div class="number">0</div>
+        <div class="col-md-3">
+            <a href="/admin/evaluation-pdfs" class="stat-card">
+                <div class="icon">📝</div>
+                <div class="number"><?= $total_evaluations ?? 0 ?></div>
                 <div class="label">Evaluations</div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/admin/evaluation-pdfs" class="stat-card">
+                <div class="icon">📄</div>
+                <div class="number"><?= $total_pdfs ?? 0 ?></div>
+                <div class="label">PDFs Generated</div>
             </a>
         </div>
     </div>

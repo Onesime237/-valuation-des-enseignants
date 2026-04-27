@@ -64,7 +64,8 @@ $routes->get('/admin/questions/toggle/(:num)',         'Admin::toggleQuestion/$1
 $routes->get('/admin/questions/delete/(:num)',         'Admin::deleteQuestion/$1',     ['filter' => 'auth:admin']);
 
 // ── Teacher ───────────────────────────────────────────────────────────────────
-$routes->get('/teacher/dashboard', 'Teacher::dashboard', ['filter' => 'auth:teacher']);
+$routes->get('/teacher/dashboard',         'Teacher::dashboard',         ['filter' => 'auth:teacher']);
+$routes->get('/teacher/download-pdf/(:num)', 'Teacher::downloadPdf/$1',   ['filter' => 'auth:teacher']);
 
 // ── Student ───────────────────────────────────────────────────────────────────
 $routes->get('/student/dashboard',                     'Student::dashboard',           ['filter' => 'auth:student']);
@@ -75,3 +76,7 @@ $routes->get('/student/my-evaluations',                'Student::myEvaluations',
 
 // ── Catch-all — MUST stay last ────────────────────────────────────────────────
 $routes->get('(:segment)', 'Pages::view');
+
+// Evaluation PDFs
+$routes->get('/admin/evaluation-pdfs',                'Admin::evaluationPdfs',         ['filter' => 'auth:admin']);
+$routes->get('/admin/evaluation-pdfs/download/(:num)', 'Admin::downloadPdf/$1',        ['filter' => 'auth:admin']);
