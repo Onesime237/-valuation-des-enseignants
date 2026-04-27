@@ -18,22 +18,33 @@ $routes->get('/logout', 'Auth::logout');
 $routes->get('/admin/dashboard', 'Admin::index', ['filter' => 'auth:admin']);
 
 // Teachers
-$routes->get('/admin/teachers',              'Admin::teachers',       ['filter' => 'auth:admin']);
-$routes->get('/admin/teachers/create',       'Admin::createTeacher',  ['filter' => 'auth:admin']);
-$routes->post('/admin/teachers/create',      'Admin::storeTeacher',   ['filter' => 'auth:admin']);
-$routes->get('/admin/teachers/edit/(:num)',  'Admin::editTeacher/$1', ['filter' => 'auth:admin']);
-$routes->post('/admin/teachers/edit/(:num)', 'Admin::updateTeacher/$1', ['filter' => 'auth:admin']);
-$routes->get('/admin/teachers/toggle/(:num)','Admin::toggleTeacher/$1', ['filter' => 'auth:admin']);
-$routes->get('/admin/teachers/delete/(:num)','Admin::deleteTeacher/$1', ['filter' => 'auth:admin']);
+$routes->get('/admin/teachers',                        'Admin::teachers',              ['filter' => 'auth:admin']);
+$routes->get('/admin/teachers/create',                 'Admin::createTeacher',         ['filter' => 'auth:admin']);
+$routes->post('/admin/teachers/create',                'Admin::storeTeacher',          ['filter' => 'auth:admin']);
+$routes->get('/admin/teachers/edit/(:num)',            'Admin::editTeacher/$1',        ['filter' => 'auth:admin']);
+$routes->post('/admin/teachers/edit/(:num)',           'Admin::updateTeacher/$1',      ['filter' => 'auth:admin']);
+$routes->get('/admin/teachers/toggle/(:num)',          'Admin::toggleTeacher/$1',      ['filter' => 'auth:admin']);
+$routes->get('/admin/teachers/delete/(:num)',          'Admin::deleteTeacher/$1',      ['filter' => 'auth:admin']);
+$routes->get('/admin/teachers/assign/(:num)',          'Admin::assignCourses/$1',      ['filter' => 'auth:admin']);
+$routes->post('/admin/teachers/assign/(:num)',         'Admin::saveAssignments/$1',    ['filter' => 'auth:admin']);
 
 // Students
-$routes->get('/admin/students',              'Admin::students',       ['filter' => 'auth:admin']);
-$routes->get('/admin/students/create',       'Admin::createStudent',  ['filter' => 'auth:admin']);
-$routes->post('/admin/students/create',      'Admin::storeStudent',   ['filter' => 'auth:admin']);
-$routes->get('/admin/students/edit/(:num)',  'Admin::editStudent/$1', ['filter' => 'auth:admin']);
-$routes->post('/admin/students/edit/(:num)', 'Admin::updateStudent/$1', ['filter' => 'auth:admin']);
-$routes->get('/admin/students/toggle/(:num)','Admin::toggleStudent/$1', ['filter' => 'auth:admin']);
-$routes->get('/admin/students/delete/(:num)','Admin::deleteStudent/$1', ['filter' => 'auth:admin']);
+$routes->get('/admin/students',                        'Admin::students',              ['filter' => 'auth:admin']);
+$routes->get('/admin/students/create',                 'Admin::createStudent',         ['filter' => 'auth:admin']);
+$routes->post('/admin/students/create',                'Admin::storeStudent',          ['filter' => 'auth:admin']);
+$routes->get('/admin/students/edit/(:num)',            'Admin::editStudent/$1',        ['filter' => 'auth:admin']);
+$routes->post('/admin/students/edit/(:num)',           'Admin::updateStudent/$1',      ['filter' => 'auth:admin']);
+$routes->get('/admin/students/toggle/(:num)',          'Admin::toggleStudent/$1',      ['filter' => 'auth:admin']);
+$routes->get('/admin/students/delete/(:num)',          'Admin::deleteStudent/$1',      ['filter' => 'auth:admin']);
+
+// Courses
+$routes->get('/admin/courses',                         'Admin::courses',               ['filter' => 'auth:admin']);
+$routes->get('/admin/courses/create',                  'Admin::createCourse',          ['filter' => 'auth:admin']);
+$routes->post('/admin/courses/create',                 'Admin::storeCourse',           ['filter' => 'auth:admin']);
+$routes->get('/admin/courses/edit/(:num)',             'Admin::editCourse/$1',         ['filter' => 'auth:admin']);
+$routes->post('/admin/courses/edit/(:num)',            'Admin::updateCourse/$1',       ['filter' => 'auth:admin']);
+$routes->get('/admin/courses/toggle/(:num)',           'Admin::toggleCourse/$1',       ['filter' => 'auth:admin']);
+$routes->get('/admin/courses/delete/(:num)',           'Admin::deleteCourse/$1',       ['filter' => 'auth:admin']);
 
 // ── Teacher ───────────────────────────────────────────────────────────────────
 $routes->get('/teacher/dashboard', 'Teacher::dashboard', ['filter' => 'auth:teacher']);

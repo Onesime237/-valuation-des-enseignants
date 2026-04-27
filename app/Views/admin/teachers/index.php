@@ -81,6 +81,7 @@
         <a href="/admin/dashboard" class="nav-link">Dashboard</a>
         <a href="/admin/teachers" class="nav-link active">Teachers</a>
         <a href="/admin/students" class="nav-link">Students</a>
+        <a href="/admin/courses">Courses</a>
         <a href="/logout" class="btn-logout">Logout</a>
     </div>
 </div>
@@ -133,6 +134,7 @@
                                 <td><?= esc($teacher['created_at']) ?></td>
                                 <td class="d-flex gap-2">
                                     <a href="/admin/teachers/edit/<?= $teacher['id'] ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="/admin/teachers/assign/<?= $teacher['id'] ?>" class="btn btn-sm me-1" style="font-size:0.75rem;background:#6366f1;color:#fff">Assign Courses</a>
                                     <a href="/admin/teachers/toggle/<?= $teacher['id'] ?>" class="btn btn-sm <?= $teacher['is_active'] ? 'btn-outline-warning' : 'btn-outline-success' ?>">
                                         <?= $teacher['is_active'] ? 'Deactivate' : 'Activate' ?>
                                     </a>
