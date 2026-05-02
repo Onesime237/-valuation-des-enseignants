@@ -61,7 +61,6 @@
                     <th>#</th>
                     <th>Teacher</th>
                     <th>Course</th>
-                    <th>Student</th>
                     <th>Generated</th>
                     <th>Action</th>
                 </tr>
@@ -75,7 +74,6 @@
                         <td><?= esc($pdf['id']) ?></td>
                         <td><?= esc($pdf['teacher_name']) ?></td>
                         <td><?= esc($pdf['course_name']) ?></td>
-                        <td><?= esc($pdf['student_name']) ?></td>
                         <td style="color:#94a3b8;font-size:0.875rem"><?= date('M d, Y H:i', strtotime($pdf['generated_at'])) ?></td>
                         <td>
                             <a href="/admin/evaluation-pdfs/download/<?= $pdf['id'] ?>" class="btn-download">📥 Download</a>

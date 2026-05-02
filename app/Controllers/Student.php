@@ -206,7 +206,6 @@ class Student extends BaseController
             <div class="info">
                 <p><strong>Teacher:</strong> ' . esc($teacher['name']) . '</p>
                 <p><strong>Course:</strong> ' . esc($course['name']) . '</p>
-                <p><strong>Student:</strong> ' . esc($student['name']) . '</p>
                 <p><strong>Date:</strong> ' . date('F d, Y') . '</p>
             </div>
 
